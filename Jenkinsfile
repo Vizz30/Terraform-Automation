@@ -1,5 +1,9 @@
-pipeline {
+pipeline { 
     agent any
+
+    parameters {
+        string(name: 'action', defaultValue: 'apply', description: 'Terraform action to perform (e.g., apply, destroy)')
+    }
 
     stages {
         stage('Cloning github repo') {
@@ -9,10 +13,10 @@ pipeline {
         }
     
         stage ("terraform init") {
-           steps {
-                 sh ("terraform init -reconfigure") 
-             }
-         }
+            steps {
+                sh ("terraform init -reconfigure") 
+            }
+        }
         
         stage ("terraform Plan") {
             steps {
@@ -22,9 +26,9 @@ pipeline {
 
         stage ("Action") {
             steps {
-                echo "Terraform action is --> ${action}"
-                sh ('terraform ${action} --auto-approve') 
-           }
+                echo "Terraform action is --> ${params.action}"
+                sh "terraform ${params.action} --auto-approve"  // Corrected to use double quotes
+            }
         }
     }
 }
