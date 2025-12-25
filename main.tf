@@ -47,6 +47,14 @@ resource "aws_instance" "myFirstInstance" {
   key_name = var.key_name
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.jenkins-sg-2022.id]
+
+  # Set root volume size to 20 GB
+  root_block_device {
+    volume_size = 20
+    volume_type = "gp3"
+    delete_on_termination = true
+  }
+
   tags= {
     Name = var.tag_name
   }
@@ -60,3 +68,4 @@ tags= {
     Name = "my_elastic_ip"
   }
 }
+
