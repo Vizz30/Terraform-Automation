@@ -8,7 +8,6 @@ pipeline {
             description: 'Select the action to perform'
         )
     }
-
     stages {
         stage('Checkout') {
             steps {
